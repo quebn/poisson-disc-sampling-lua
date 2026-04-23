@@ -116,6 +116,7 @@ end
 ---@param tries? number defaults to `20` if `nil`
 ---@return PDSVector2[]
 function M.generate(width, height, min_dist, tries)
+    assert(min_dist > 0, string.format("PDS.generate: invalid min_dist value of: %s", min_dist))
     tries = tries or 20
     local cell_size = min_dist / sqrt(2)
 
