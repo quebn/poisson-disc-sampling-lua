@@ -21,7 +21,7 @@ end
 ---@param v PDSVector2
 ---@param size number
 ---@return PDSVector2
-local function image_to_grid(v, size)
+local function grid_from_image(v, size)
     return {
         x = floor(v.x / size),
         y = floor(v.y / size),
@@ -90,7 +90,7 @@ end
 ---@param cell_size number
 ---@return boolean
 local function in_neighbourhood(grid, grid_size, point, dist, cell_size)
-    local grid_point = image_to_grid(point, cell_size)
+    local grid_point = grid_from_image(point, cell_size)
     local cells_around_point = square_around_point(grid, grid_size, grid_point, 2)
     for i = 1, #cells_around_point do
         local cell = cells_around_point[i]
@@ -106,7 +106,7 @@ end
 ---@param grid_width number
 ---@return number index
 local function image_grid_index(point, cell_size, grid_width)
-    local pos = image_to_grid(point, cell_size)
+    local pos = grid_from_image(point, cell_size)
     return index_array2D(pos.x, pos.y ,grid_width)
 end
 
