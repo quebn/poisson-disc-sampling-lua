@@ -64,38 +64,19 @@ end
 
 ---@param grid PDSVector2[]
 ---@param grid_size number
----@param grid_point PDSVector2
----@param size number
----@return PDSVector2[]
-local function square_around_point(grid, grid_size, grid_point, size)
-    local around = {}
-    local gx = grid_point.x
-    local gy = grid_point.y
-    for x = gx - size, gx + size do
-        for y = gy - size, gy + size do
-            local index = index_array2D(x, y, grid_size)
-            local cell = grid[index]
-            if cell ~= nil then
-                table.insert(around, cell)
-            end
-        end
-    end
-    return around
-end
-
----@param grid PDSVector2[]
----@param grid_size number
 ---@param point PDSVector2
 ---@param dist number
 ---@param cell_size number
 ---@return boolean
 local function in_neighbourhood(grid, grid_size, point, dist, cell_size)
     local grid_point = grid_from_image(point, cell_size)
-    local cells_around_point = square_around_point(grid, grid_size, grid_point, 2)
-    for i = 1, #cells_around_point do
-        local cell = cells_around_point[i]
-        if distance(cell, point) < dist then
-            return true
+    for x = grid_point.x - 2, grid_point.x + 2 do
+        for y = grid_point.y - 2, grid_point.y + 2 do
+            local index = index_array2D(x, y, grid_size)
+            local cell = grid[index]
+            if cell ~= nil and distance(cell, point) < dist then
+                return true
+            end
         end
     end
     return false
