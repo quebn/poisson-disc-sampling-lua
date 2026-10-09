@@ -14,14 +14,14 @@ vector_zero.__index = vector_zero
 ---@param x number
 ---@param y number
 ---@param size number
-local function index_array2D(x, y, size)
+local index_array2D = function(x, y, size)
     return (x-1) + (y-1) * size + 1
 end
 
 ---@param v PDSVector2
 ---@param size number
 ---@return PDSVector2
-local function grid_from_image(v, size)
+local grid_from_image = function(v, size)
     return {
         x = floor(v.x / size),
         y = floor(v.y / size),
@@ -31,7 +31,7 @@ end
 ---@param v PDSVector2
 ---@param dist number
 ---@return PDSVector2
-local function generate_random_point_around(v, dist)
+local generate_random_point_around = function(v, dist)
     local r1 = rand()
     local r2 = rand()
 
@@ -47,7 +47,7 @@ end
 ---@param height number
 ---@param point PDSVector2
 ---@return boolean
-local function in_rectangle(width, height, point)
+local in_rectangle = function(width, height, point)
     local x = point.x
     local y = point.y
     return x > 0 and x <= width and y > 0 and y <= height
@@ -56,7 +56,7 @@ end
 ---@param start_point PDSVector2
 ---@param end_point PDSVector2
 ---@return number
-local function distance(start_point, end_point)
+local distance = function(start_point, end_point)
     local dx = end_point.x - start_point.x
     local dy = end_point.y - start_point.y
     return math.sqrt(dx * dx + dy * dy)
@@ -68,7 +68,7 @@ end
 ---@param dist number
 ---@param cell_size number
 ---@return boolean
-local function in_neighbourhood(grid, grid_size, point, dist, cell_size)
+local in_neighbourhood = function(grid, grid_size, point, dist, cell_size)
     local grid_point = grid_from_image(point, cell_size)
     for x = grid_point.x - 2, grid_point.x + 2 do
         for y = grid_point.y - 2, grid_point.y + 2 do
@@ -86,7 +86,7 @@ end
 ---@param cell_size number
 ---@param grid_width number
 ---@return number index
-local function image_grid_index(point, cell_size, grid_width)
+local image_grid_index = function(point, cell_size, grid_width)
     local pos = grid_from_image(point, cell_size)
     return index_array2D(pos.x, pos.y ,grid_width)
 end
@@ -96,7 +96,7 @@ end
 ---@param min_dist number
 ---@param tries? number defaults to `20` if `nil`
 ---@return PDSVector2[]
-function M.generate(width, height, min_dist, tries)
+M.generate = function(width, height, min_dist, tries)
     assert(min_dist > 0, string.format("PDS.generate: invalid min_dist value of: %s", min_dist))
     tries = tries or 20
     local cell_size = min_dist / sqrt(2)
